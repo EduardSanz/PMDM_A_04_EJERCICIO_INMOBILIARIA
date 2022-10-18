@@ -31,6 +31,7 @@ public class MainActivity extends AppCompatActivity {
     private ArrayList<Inmueble> inmueblesList;
 
     private ActivityResultLauncher<Intent> crearInmuebleLauncher;
+    private ActivityResultLauncher<Intent> editInmuebleLauncher;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +84,23 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
         );
+
+        editInmuebleLauncher = registerForActivityResult(
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
+                    @Override
+                    public void onActivityResult(ActivityResult result) {
+                        if (result.getResultCode() == RESULT_OK) {
+                            if (result.getData() != null && result.getData().getExtras() != null) {
+                                Inmueble inmueble = (Inmueble) result.getData().getExtras().getSerializable(Constantes.INMUEBLE);
+                                int posicion = result.getData().getExtras().getInt(Constantes.POSICION);
+                                inmueblesList.set(posicion, inmueble);
+                                mostrarInmueblesContenedor();
+                            }
+                        }
+                    }
+                }
+        );
     }
 
     private void mostrarInmueblesContenedor() {
@@ -104,6 +122,21 @@ public class MainActivity extends AppCompatActivity {
             lblCiudad.setText(inmueble.getCiudad());
             lblProvincia.setText(inmueble.getProvincia());
             rbValoracion.setRating(inmueble.getValoracion());
+
+            // CREAR EL EVENTO DE CLICK
+            int finalI = i;
+            inmuebleView.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Intent intent = new Intent(MainActivity.this, EditInmuebleActivity.class);
+                    Bundle bundle = new Bundle();
+                    bundle.putSerializable(Constantes.INMUEBLE, inmueble);
+                    bundle.putInt(Constantes.POSICION, finalI);
+                    intent.putExtras(bundle);
+                    editInmuebleLauncher.launch(intent);
+                }
+            });
+
             // INSERTO EL ELEMENTO EN EL CONTENEDOR
             binding.contentMain.contenedor.addView(inmuebleView);
         }
