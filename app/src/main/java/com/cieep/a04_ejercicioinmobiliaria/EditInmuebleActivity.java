@@ -41,7 +41,6 @@ public class EditInmuebleActivity extends AppCompatActivity {
                 if (inmuebleUpdated != null) {
                     Intent intent = new Intent();
                     Bundle bundle1 = new Bundle();
-                    bundle1.putInt(Constantes.BOTON, view.getId());
                     bundle1.putSerializable(Constantes.INMUEBLE, inmuebleUpdated);
                     int posicion = bundle.getInt(Constantes.POSICION);
                     bundle1.putInt(Constantes.POSICION, posicion);
@@ -52,17 +51,6 @@ public class EditInmuebleActivity extends AppCompatActivity {
             }
         });
 
-        binding.btnEliminarEditInmueble.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intentEliminar = new Intent();
-                Bundle bundleEliminar = new Bundle();
-                bundleEliminar.putInt(Constantes.BOTON, view.getId());
-                bundleEliminar.putInt(Constantes.POSICION, bundle.getInt(Constantes.POSICION));
-                intentEliminar.putExtras(bundleEliminar);
-                setResult(RESULT_OK, intentEliminar);
-            }
-        });
 
         Log.d("INMU", inmueble.toString());
     }

@@ -94,17 +94,7 @@ public class MainActivity extends AppCompatActivity {
                             if (result.getData() != null && result.getData().getExtras() != null) {
                                 Inmueble inmueble = (Inmueble) result.getData().getExtras().getSerializable(Constantes.INMUEBLE);
                                 int posicion = result.getData().getExtras().getInt(Constantes.POSICION);
-                                int idBoton = result.getData().getExtras().getInt(Constantes.BOTON);
-
-                                switch (idBoton){
-                                    case R.id.btnCrearEditInmueble:
-                                        inmueblesList.set(posicion, inmueble);
-                                        break;
-                                    case R.id.btnEliminarEditInmueble:
-                                        inmueblesList.remove(posicion);
-                                        break;
-                                }
-
+                                inmueblesList.set(posicion, inmueble);
                                 mostrarInmueblesContenedor();
                             }
                         }
