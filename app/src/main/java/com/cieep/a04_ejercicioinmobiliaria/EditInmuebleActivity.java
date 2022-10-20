@@ -51,6 +51,16 @@ public class EditInmuebleActivity extends AppCompatActivity {
             }
         });
 
+        binding.btnEliminarEditInmueble.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intentEliminar = new Intent();
+                Bundle bundleEliminar = new Bundle();
+                bundleEliminar.putInt(Constantes.POSICION, bundle.getInt(Constantes.POSICION));
+                intentEliminar.putExtras(bundleEliminar);
+                setResult(RESULT_OK, intentEliminar);
+            }
+        });
 
         Log.d("INMU", inmueble.toString());
     }

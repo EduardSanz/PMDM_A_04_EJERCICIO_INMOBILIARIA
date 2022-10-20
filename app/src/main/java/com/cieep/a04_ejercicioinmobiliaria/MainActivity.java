@@ -94,7 +94,10 @@ public class MainActivity extends AppCompatActivity {
                             if (result.getData() != null && result.getData().getExtras() != null) {
                                 Inmueble inmueble = (Inmueble) result.getData().getExtras().getSerializable(Constantes.INMUEBLE);
                                 int posicion = result.getData().getExtras().getInt(Constantes.POSICION);
-                                inmueblesList.set(posicion, inmueble);
+                                if (inmueble != null)
+                                    inmueblesList.set(posicion, inmueble);
+                                else
+                                    inmueblesList.remove(posicion);
                                 mostrarInmueblesContenedor();
                             }
                         }
